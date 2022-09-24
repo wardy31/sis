@@ -4,6 +4,8 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import {BrowserRouter} from "react-router-dom"
+import 'toastr/build/toastr.css'
+import 'toastr/build/toastr.min.js'
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));

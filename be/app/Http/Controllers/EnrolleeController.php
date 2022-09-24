@@ -37,8 +37,8 @@ class EnrolleeController extends Controller
         $checkingProgram =Program::find($programData);
         $checkingCourse = Course::find($courseData);
 
-        if($checkingProgram->college_id == $collegeData){
-            if($checkingCourse->program_id == $programData){
+        if($checkingProgram->college_id === $collegeData){
+            if($checkingCourse->program_id === $programData){
                 
                 $enrollee = new Enrollee;
 
@@ -52,22 +52,12 @@ class EnrolleeController extends Controller
                 return response()->json(['message' => 'Added Successfully','data' => $enrollee]);
             }
             else{
-                return response()->json("Wrong Program Picked");
+                return response()->json("Wrong Program Picked in this Course");
             }
         }
         else{
-            return response()->json("Wrong College Picked");
+            return response()->json("Wrong College Picked in this Program");
         }
-        $enrollee = new Enrollee;
-
-        $enrollee->student_id = $request->input('student_id');
-        $enrollee->college_id = $request->input('college_id');
-        $enrollee->program_id = $request->input('program_id');
-        $enrollee->course_id  = $request->input('course_id');
-
-        $enrollee->save();
-
-        return response()->json(['message' => 'Added Successfully','data' => $enrollee]);
     }
 
     /**
@@ -79,8 +69,8 @@ class EnrolleeController extends Controller
     public function show($id)
     {
         $enrollee = Enrollee::with(['student','college','program','course'])->where('student_id',$id)->get();
-
-        return response()->json($enrollee);
+ 
+        return response()->json(['message' => $enrollee]);
     }
 
     /**
@@ -92,16 +82,35 @@ class EnrolleeController extends Controller
      */
     public function update(Request $request, $id)
     {
-       $enrollee = Enrollee::find($id);
+
+        $programData = $request->input('program_id');
+        $collegeData = $request->input('college_id');
+        $courseData = $request->input('course_id');
+
+        $checkingProgram =Program::find($programData);
+        $checkingCourse = Course::find($courseData);
+
+        if($checkingProgram->college_id == $collegeData){
+            if($checkingCourse->program_id == $programData){
+                
+                $enrollee = Enrollee::find($id);
         
-       $enrollee->student_id = $request->input('student_id');
-       $enrollee->college_id = $request->input('college_id');
-       $enrollee->program_id = $request->input('program_id');
-       $enrollee->course_id  = $request->input('course_id');
-
-       $enrollee->save();
-
-       return response()->json(['message' => 'Updated Successfully','data' => $enrollee]);
+                $enrollee->student_id = $request->input('student_id');
+                $enrollee->college_id = $request->input('college_id');
+                $enrollee->program_id = $request->input('program_id');
+                $enrollee->course_id  = $request->input('course_id');
+         
+                $enrollee->save();
+         
+                return response()->json(['message' => 'Updated Successfully','data' => $enrollee]);
+            }
+            else{
+                return response()->json("Wrong Program Picked");
+            }
+        }
+        else{
+            return response()->json("Wrong College Picked");
+        }
     }
 
     /**

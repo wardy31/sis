@@ -2,6 +2,7 @@ import loginImage from '../assets/img/login.svg'
 import {Link,useNavigate} from 'react-router-dom'
 import { useState } from "react";
 import axios from 'axios'
+import toastr from 'toastr'
 
 function Login() {
     const navigate = useNavigate()
@@ -19,6 +20,7 @@ function Login() {
         axios.post('http://127.0.0.1:8000/api/login',login)
         .then(res => {
             navigate('/manage')
+            toastr["success"]("Successfully Login!")
         })
         .catch(res => {
             setUsername('')

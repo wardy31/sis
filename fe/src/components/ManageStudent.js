@@ -1,6 +1,7 @@
 import Navbar from './NavBar'
 import moment from 'moment'
 import axios from '../config/axios'
+import toastr from '../config/toastr'
 
 import {useState,useEffect} from 'react'
 
@@ -59,6 +60,8 @@ function addEnrollee(e){
         setCollege('')
         setProgram('')
         setCourse('')
+        toastr["success"]("Successfully Added!")
+
     })
 }
 
@@ -78,7 +81,8 @@ function updateEnrollee(e){
     setCollege('')
     setProgram('')
     setCourse('')
-    console.log(res.data)
+    toastr["success"]("Successfully Updated!")
+
 })
 }
 
@@ -98,11 +102,10 @@ function deleteEnrollee(e){
      setCollege('')
      setProgram('')
      setCourse('')
-     console.log(res.data)
+     toastr["success"]("Successfully Deleted!")
  })
  
  }
-
 
 function handleModal(modal,data){
     setModal(modal)
